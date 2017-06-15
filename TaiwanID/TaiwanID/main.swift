@@ -25,6 +25,7 @@ func substr(string: String, start: Int, length: Int) -> String {
     return string[range]
 }
 
+// 身份證號產生器
 struct TaiwanID {
     var id: String
     init() {
@@ -63,12 +64,59 @@ struct TaiwanID {
              String(n3) + String(n4) + String(n5)  + String(n6) + String(n7) +
              String(n8) + String(n9) + String(n10) + String(n11)
     }
+    static func isValidate(id: String) -> Bool {
+// 下面三行有問題暫Mark
+//        if id.range(of: "/^[A-Z][12][0-9]{8}$/", options: .regularExpression) == nil {
+//            return false
+//        }
+        let regionCodes = ["A","B","C","D","E","F","G","H","J","K","L","M","N",
+                           "P","Q","R","S","T","U","V","X","Y","Z","W","I","O"]
+        let regionCode = substr(string: id, start: 0, length: 1)
+        var n12 = 0
+        if let regionIndex = regionCodes.index(of: regionCode) {
+            n12 = regionIndex + 10
+        } else {
+            return false
+        }
+        let n1  = n12 / 10
+        let n2  = n12 % 10
+        let n3  = Int(substr(string: id, start: 1, length: 1)) ?? 0
+        let n4  = Int(substr(string: id, start: 2, length: 1)) ?? 0
+        let n5  = Int(substr(string: id, start: 3, length: 1)) ?? 0
+        let n6  = Int(substr(string: id, start: 4, length: 1)) ?? 0
+        let n7  = Int(substr(string: id, start: 5, length: 1)) ?? 0
+        let n8  = Int(substr(string: id, start: 6, length: 1)) ?? 0
+        let n9  = Int(substr(string: id, start: 7, length: 1)) ?? 0
+        let n10 = Int(substr(string: id, start: 8, length: 1)) ?? 0
+        let n11 = Int(substr(string: id, start: 9, length: 1)) ?? 0
+        let num = n1 * 1 + n2 * 9 + n3 * 8 + n4 * 7 + n5 * 6 +
+            n6 * 5 + n7 * 4 + n8 * 3 + n9 * 2 + n10 + n11
+        if num % 10 == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    init(id: String) {
+        if TaiwanID.isValidate(id: id) {
+            self.id = id
+        } else {
+            self.id = "錯誤身份證號"
+        }
+    }
 }
-let myID = TaiwanID()
+// 1
+//let myID = TaiwanID()
+// 2
 //let myID = TaiwanID(gender: false)
-//let myID = TaiwanID(region: 22)
+// 3
+let myID = TaiwanID(region: 22)
+// 4
 //let myID = TaiwanID(gender: false, region: 11)
+// 5
+//let myID = TaiwanID(id: "A123456789")
 print(myID.id)
+
 
 
 
