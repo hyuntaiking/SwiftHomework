@@ -65,10 +65,10 @@ struct TaiwanID {
              String(n8) + String(n9) + String(n10) + String(n11)
     }
     static func isValidate(id: String) -> Bool {
-// 下面三行有問題暫Mark
-//        if id.range(of: "/^[A-Z][12][0-9]{8}$/", options: .regularExpression) == nil {
-//            return false
-//        }
+        if id.range(of: "^[A-Z][12][0-9]{8}$", options: .regularExpression) == nil {
+            print("XX")
+            return false
+        }
         let regionCodes = ["A","B","C","D","E","F","G","H","J","K","L","M","N",
                            "P","Q","R","S","T","U","V","X","Y","Z","W","I","O"]
         let regionCode = substr(string: id, start: 0, length: 1)
@@ -110,11 +110,11 @@ struct TaiwanID {
 // 2
 //let myID = TaiwanID(gender: false)
 // 3
-let myID = TaiwanID(region: 22)
+//let myID = TaiwanID(region: 22)
 // 4
 //let myID = TaiwanID(gender: false, region: 11)
 // 5
-//let myID = TaiwanID(id: "A123456789")
+let myID = TaiwanID(id: "L123456789")
 print(myID.id)
 
 
